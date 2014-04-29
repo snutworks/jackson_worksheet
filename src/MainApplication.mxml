@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="1000" height="700"
+			   applicationComplete="handler_applicationComplete(event)">
+	<fx:Script>
+		<![CDATA[
+			import flash.net.sendToURL;
+			
+			import mx.events.FlexEvent;
+			
+			import ru.snut.jws.core.ApplicationFacade;
+			import ru.snut.jws.core.data.ApplicationProxy;
+			
+			private var _facade:ApplicationFacade;
+			
+			private function handler_applicationComplete(event:FlexEvent):void {
+//				var company:Company = new Company('OKTAËDER', new Date(2013, 2, 12));
+//				var client:Client = new Client('Амедиатека', 0xff00ff);
+//				client.projects.push(new Project(new Date(2013, 2, 15), 'iOS'));
+//				client.projects.push(new Project(new Date(2013, 2, 25), 'Сайт'));
+//				company.clients.push(client);
+//				trace(company);
+				_facade = ApplicationFacade.instance();
+				_facade.startup(this);
+				
+				ApplicationProxy.get().createVO();
+			}
+			
+			private function handler_createCompany(event:MouseEvent):void {
+				dispatchEvent(new Event('asd'))
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Group id="holder" width="100%" height="100%" />
+	<s:Group>
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
+		<s:Button id="createCompany" click="handler_createCompany(event)" />
+	</s:Group>
+</s:Application>

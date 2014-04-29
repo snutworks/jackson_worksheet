@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="handler_creationComplete(event)"
+		 skinClass="ru.snut.jws.view.PanelSkin" title="Enter Company Name">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			public static const CREATE_COMPANY:String = 'CompanyEditor.CREATE_COMPANY';
+			private var _skin:PanelSkin;
+			
+			protected function handler_creationComplete(event:FlexEvent):void {
+				_skin = skin as PanelSkin;
+				_skin.topGroup.addEventListener(MouseEvent.MOUSE_DOWN, handler_mouseDown);
+			}
+			
+			private function handler_mouseDown(event:MouseEvent):void {
+				_skin.topGroup.removeEventListener(MouseEvent.MOUSE_DOWN, handler_mouseDown);
+				_skin.topGroup.addEventListener(MouseEvent.MOUSE_UP, handler_mouseUp);
+			
+				startDrag();
+			}
+			
+			private function handler_mouseUp(event:MouseEvent):void {
+				_skin.topGroup.removeEventListener(MouseEvent.MOUSE_UP, handler_mouseUp);
+				_skin.topGroup.addEventListener(MouseEvent.MOUSE_DOWN, handler_mouseDown);
+				
+				stopDrag();
+			}
+			
+			private function handler_click(event:MouseEvent):void {
+				dispatchEvent(new Event(CREATE_COMPANY));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:controlBarContent>
+		<s:Button label="Create Company" click="handler_click(event)" />
+	</s:controlBarContent>
+	<s:Group id="content">
+		<s:layout>
+			<s:VerticalLayout paddingBottom="10" 
+							  paddingLeft="20" 
+							  paddingRight="20" 
+							  paddingTop="20" 
+							  horizontalAlign="center" 
+							  verticalAlign="middle" />
+		</s:layout>
+		<s:TextInput id="companyNameTI" />
+	</s:Group>
+</s:Panel>
